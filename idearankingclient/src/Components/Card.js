@@ -18,9 +18,9 @@ function Card({isLoading, title, ranking, description, id, categories, vote, isT
                 <p>{description}</p>
                 <div className='card__tags'>
                     {
-                        categories.map((category, key) =>
+                        categories["$values"].map((category, key) =>
                         {
-                            return (<span key={key}>{category}</span>)
+                            return (<span key={key}>{category.name}</span>)
 
                         })
                     }

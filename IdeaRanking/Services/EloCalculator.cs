@@ -19,6 +19,10 @@ public class EloCalculator : IEloCalculator
 
     public int getKFactor(Idea idea)
     {
-        return 30;
+        if(idea.NumberOfMatches < 30)
+            return 30;
+        else if(idea.BiggestRating < 2400)
+            return 15;
+        else return 10;
     }
 }

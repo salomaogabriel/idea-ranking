@@ -51,6 +51,10 @@ public class IdeasRepository : IIdeasRepository
             return null;
 
         idea.Ranking = rank;
+        if(idea.Ranking > idea.BiggestRating)
+        {
+            idea.BiggestRating = rank;
+        }
         
         var updatedIdea = _context.Ideas?.Update(idea);
         await _context.SaveChangesAsync();
@@ -58,13 +62,14 @@ public class IdeasRepository : IIdeasRepository
      
     }
 
-    public async Task<Idea?> UpdateMatchesNo(int id)
+    public async Task<Idea?> UpdateMatchesNo(int id, bool won)
     {
         var idea = await GetIdea(id);
         if (idea == null)
             return null;
 
         idea.NumberOfMatches += 1;
+        if(won) idea.Wins += 1;
         var updatedIdea = _context.Ideas?.Update(idea);
         await _context.SaveChangesAsync();
         return updatedIdea?.Entity;
@@ -73,12 +78,15 @@ public class IdeasRepository : IIdeasRepository
 
     public async Task<Idea> GetRandomIdea()
     {
-        return (await _context.Ideas.OrderBy(r => Guid.NewGuid()).FirstOrDefaultAsync())!;
+        return (await _context.Ideas
+            .Include(i => i.Categories)
+            .OrderBy(r => Guid.NewGuid()).FirstOrDefaultAsync())!;
     }
 
     public async Task<Idea> GetRandomIdea(int except)
     {
         return await _context.Ideas!
+            .Include(i => i.Categories)
             .Where(i => i.Id != except)
             .OrderBy(r => Guid.NewGuid()).FirstOrDefaultAsync();
 
@@ -112,4 +120,5 @@ public class IdeasRepository : IIdeasRepository
                 .Any(i => i == c.Id)).ToListAsync();
         return categories;
     }
+    public int GetIdeasMaxPages() => (int)Math.Ceiling(_context.Ideas.Count() / 10.0);
 }

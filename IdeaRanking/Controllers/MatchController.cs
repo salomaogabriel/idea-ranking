@@ -31,7 +31,10 @@ public class MatchController : ControllerBase
     {
         // TODO: Come up with an way to give preference to the projects with less matches.
         var idea1 = await _ideasRepository.GetRandomIdea();
+        if(idea1 == null) return BadRequest("Not enough ideas, please add more!");
         var idea2 =await _ideasRepository.GetRandomIdea(idea1.Id);
+        if(idea2 == null) return BadRequest("Not enough ideas, please add more!");
+
         var match = new Match()
         {
             IdeaOne = idea1,
@@ -47,6 +50,7 @@ public class MatchController : ControllerBase
     public async Task<IActionResult> GetExistingMatch(int id)
     {
         var match = await _matchRepository.GetMatch(id);
+        if(match == null) return NotFound($"A Match with id of {id} was not found!");
         return Ok(match);
     }
     // POST /vote -> Votes.
@@ -54,12 +58,14 @@ public class MatchController : ControllerBase
     public async Task<IActionResult> Vote(VoteRequest request)
     {
         var match = await _matchRepository.GetMatch(request.Id);
+        if(match == null) return NotFound($"A Match with id of {request.Id} was not found!");
+
         if (match.HasFinished) return BadRequest();
         
         var winner = request.IsFirstTheWinner ? Winner.One : Winner.Two;
             match.Winner = winner;
-        await _ideasRepository.UpdateMatchesNo(match.IdeaOne!.Id);        
-        await _ideasRepository.UpdateMatchesNo(match.IdeaTwo!.Id);
+        await _ideasRepository.UpdateMatchesNo(match.IdeaOne!.Id, _matchRepository.IsWinner(match, match.IdeaOne));        
+        await _ideasRepository.UpdateMatchesNo(match.IdeaTwo!.Id, _matchRepository.IsWinner(match, match.IdeaTwo));
         await CalculateNewRanks(match);
         await _matchRepository.EndMatch(request.Id, match.Winner);
         return await CreateMatch();
@@ -92,11 +98,19 @@ public class MatchController : ControllerBase
     [HttpGet("{pageNo:int?}")]
     public async Task<IActionResult> GetAllMatches(int pageNo = 0)
     {
+        var pageMax = _matchRepository.GetMatchesMaxPages();
         if (pageNo < 0) return BadRequest("Page needs to be bigger than 0!");
+        if (pageNo > pageMax) return BadRequest("Page needs to be smaller than 0!");
 
 
         var matches = await _matchRepository.GetAllMatches(pageNo);
-        return Ok(matches);
+
+        if(matches == null) return NotFound($"No matches were founnd!");
+
+        var response = new MatchesResponse();
+        response.Matches = matches;
+        response.MaxPage = pageMax;
+        return Ok(response);
     }
     // GET /id/{id}/{pageNo} -> Get Matches from id with pageNo
     [HttpGet("id/{id:int}/{pageNo:int?}")]
@@ -105,6 +119,8 @@ public class MatchController : ControllerBase
         if (pageNo < 0) return BadRequest("Page needs to be bigger than 0!");
 
         var matches = await _matchRepository.GetMatchesFromId(id, pageNo);
+        if(matches == null) return NotFound($"No matches were founnd!");
+
         return Ok(matches);
     }
 

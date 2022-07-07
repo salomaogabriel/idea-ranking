@@ -28,16 +28,19 @@ public class MatchRepository : IMatchRepository
             )!;
     }
 
-    public async Task<List<Match>> GetMatchesFromId(int id, int pageNo)
+    public async Task<MatchesResponse> GetMatchesFromId(int id, int pageNo)
     {
-        return await _context.Matches!.Where(c => c.IdeaOne!.Id == id || c.IdeaTwo!.Id == id)
-            .Include(i => i.IdeaOne)
-            .Include(i => i.IdeaTwo)
+        var response = new MatchesResponse();
+        var matches = _context.Matches!.Where(c => c.IdeaOne!.Id == id || c.IdeaTwo!.Id == id);
 
+            response.MaxPage = (int)Math.Ceiling(matches.Count() / 10.0);
+            response.Matches = await matches.Include(i => i.IdeaOne)
+            .Include(i => i.IdeaTwo)
             .OrderByDescending(m => m.Id)
-            .Skip(pageNo * 20)
-            .Take(20)
+            .Skip(pageNo * 10)
+            .Take(10)
             .ToListAsync();
+            return response;
     }
 
     public async Task<List<Match>> GetAllMatches(int pageNo)
@@ -45,9 +48,9 @@ public class MatchRepository : IMatchRepository
         return await _context.Matches!
             .Include(i => i.IdeaOne)
             .Include(i => i.IdeaTwo)
-            .Skip(pageNo * 20)
+            .Skip(pageNo * 10)
             .OrderByDescending(m => m.Id)
-            .Take(20)
+            .Take(10)
             .ToListAsync();
     }
 
@@ -87,4 +90,5 @@ public class MatchRepository : IMatchRepository
         await _context.SaveChangesAsync();
 
     }
+    public int GetMatchesMaxPages() => (int)Math.Ceiling(_context.Matches.Count() / 10.0);
 }

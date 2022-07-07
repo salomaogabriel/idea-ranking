@@ -12,3 +12,15 @@
     background-color: #2E1B06;
     border-color: #FBA94C;
 }
+.body-blink {
+
+    animation: blink 400ms ease-out;
+}
+@keyframes blink {
+    0% {
+        background-color: #505059;
+    }
+    100% {
+        background-color: #323238;
+    }
+}

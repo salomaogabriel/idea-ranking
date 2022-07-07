@@ -1,4 +1,5 @@
 using IdeaRanking.Models.Requests;
+using IdeaRanking.Models;
 using IdeaRanking.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,10 +21,16 @@ public class IdeasController : ControllerBase
     [HttpGet("page/{pageNo:int?}")]
     public async Task<IActionResult> GetRankedIdeas(int pageNo = 0)
     {
+        var maxPage = _ideasRepository.GetIdeasMaxPages();
         if (pageNo < 0) return BadRequest("Page needs to be bigger than 0!");
+        if (pageNo > maxPage) return BadRequest($"Page needs to be smaller than {maxPage}!");
 
         var ideas = await _ideasRepository.GetIdeas(pageNo)!;
-        return Ok(ideas);
+        if(ideas == null) return NotFound("There are no ideas");
+        var response = new IdeasResponse();
+        response.Ideas = ideas;
+        response.MaxPage = maxPage;
+        return Ok(response);
     }
     [HttpGet]
     public async Task<IActionResult> GetRankedIdeas()
@@ -37,6 +44,8 @@ public class IdeasController : ControllerBase
     {
 
         var idea = await _ideasRepository.GetIdea(id);
+        if(idea == null) return NotFound($"An idea with id of {id} doesn't exst!");
+
         return Ok(idea);
     }
     // Create a new Idea

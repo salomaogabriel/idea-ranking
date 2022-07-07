@@ -13,6 +13,7 @@ public class Idea
     public Idea(IdeaRequest request)
     {
         Ranking = 800;
+        BiggestRating = 800;
         Title = request.Title;
         Description = request.Description;
         Categories = new List<Category>();
@@ -21,6 +22,8 @@ public class Idea
     public int Id { get; set; }
     public int Ranking { get; set; }
     public int NumberOfMatches { get; set; } = 0;
+    public int Wins { get; set; } = 0;
+    public int BiggestRating { get; set; } = 0;
 
     public string? Title { get; set; }
     public string? Description { get; set; }

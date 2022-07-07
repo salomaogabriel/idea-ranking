@@ -1,0 +1,85 @@
+.idea-screen {
+    width: 90%;
+    margin: auto;
+    margin-top:20px;
+    border-radius: 8px;
+    background-color: #202024;
+}
+
+.idea__header {
+    display: flex;
+    align-items: center;
+    padding: 4px 8px;
+    background-image: linear-gradient(90deg, #242428 0%, transparent 100%);
+    background-color: #202024;
+    border-radius: 8px 8px 0 0;
+}
+.idea-screen__content {
+    padding: 20px;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* number of lines to show */
+            line-clamp: 4; 
+    -webkit-box-orient: vertical;
+    color: #C4C4CC;
+
+}
+.idea__header span {
+    margin-left: 20px;
+    font-size: 24px;
+    font-weight: 100;
+    margin-right: 20px;
+    background-color: #202024;
+    padding: 8px;
+    border-radius: 5px;
+}
+.idea__header h2 {
+    font-weight: 300;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.idea__tags {
+    display: flex;
+    align-items: center;
+}
+.idea__tags span {
+    font-weight: 100;
+    font-size: 12px;
+    background-color: #505059;
+    border-radius: 12px;
+    margin: 20px;
+    padding: 8px;
+    transition: 200ms;
+    cursor:default;
+}
+.idea__tags span:hover {
+    background-color: #7C7C8A;
+}
+
+.last-10 span {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin: 10px;
+    background-color: #8D8D99;
+    border-radius: 50%;
+}
+.last-10 .won {
+background-color: #04D361;
+}
+.last-10 .lost {
+    background-color: #FC4737;
+}
+.idea__stats {
+    color: #C4C4CC;
+    text-align: left;
+    padding: 0 20px;
+}
+.idea__stats .stat{
+    background-color: #121214;
+    padding: 8px;
+    border-radius: 8px;
+}

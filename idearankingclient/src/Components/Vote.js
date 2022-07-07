@@ -4,13 +4,23 @@ import Card from './Card';
 import { useEffect, useState } from 'react';
 function Vote() {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const getMatch = async () => {
+    setLoading(true);
+
     const response = await fetch("https://localhost:7002/api/Match/vote");
     const deserializedJSON = await response.json();
     setData(deserializedJSON);
-    localStorage.setItem('voteMatch', JSON.stringify(deserializedJSON))
+    console.log(deserializedJSON)
+    setLoading(false);
   }
   const vote = async (isTeamOneWinner) => {
+  document.body.classList.add("body-blink");
+    setTimeout(() => {
+  document.body.classList.remove("body-blink");
+
+    },200)
+
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     const body = JSON.stringify({
@@ -28,19 +38,14 @@ function Vote() {
     const response = await fetch("https://localhost:7002/api/Match", requestOptions)
     const deserializedJSON = await response.json();
     setData(deserializedJSON);
+
   }
   useEffect(() => {
-    let stored = localStorage.getItem('voteMatch')
-    if(stored !== null && data.length === 0)
-    {
-      setData(JSON.parse(stored))
-    }
-    else {
+ 
       getMatch();
-    }
   },[])
 
-  if(data.length != 0)
+  if(!loading)
   {
     return (
       <div className="vote-wrapper">
@@ -51,7 +56,7 @@ function Vote() {
           ranking={data.ideaOne.ranking}
           description={data.ideaOne.description}
           id={data.ideaOne.id}
-          categories={["Alfa",'Beta','title']}
+          categories={data.ideaOne.categories}
           vote={vote}
           isTeamOne= {true}
         />
@@ -60,7 +65,7 @@ function Vote() {
           ranking={data.ideaTwo.ranking}
           description={data.ideaTwo.description}
           id={data.ideaTwo.id}
-          categories={["Alfa",'Beta','title']}
+          categories={data.ideaOne.categories}
           vote={vote}
           isTeamOne= {false}
 
