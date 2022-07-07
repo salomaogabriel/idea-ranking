@@ -1,0 +1,30 @@
+.pagination button
+{
+    background-color: transparent;
+    text-decoration: none;
+    cursor: pointer;
+    color: #FBA94C;
+    padding: 8px;
+    border-radius: 8px;
+    transition: 500ms;
+    border: 1px solid #FBA94C;
+    margin: 0 10px;
+    cursor: pointer;
+}
+.pagination button:hover {
+    background-color: #2E1B06;
+}
+
+.pagination {
+    margin-bottom: 20px;
+}
+.disabled {
+    border-color: #7C7C8A !important;
+    background-color: transparent !important;
+    color: #7C7C8A !important;
+    cursor: default;
+}
+.disabled:hover {
+    background-color: transparent !important;
+
+}

@@ -6,7 +6,7 @@ function Header({LinkToCreate}) {
     <header className="main-header">
         <h2>Ideas Ranking</h2>
         <Link to={LinkToCreate ?  "/Create" : "/"} className="main-header__btn">
-         {LinkToCreate ? <>Create</> :<>Vote</>}
+         {LinkToCreate ? <>Add Idea</> :<>Go Vote</>}
         </Link>
          
     </header>

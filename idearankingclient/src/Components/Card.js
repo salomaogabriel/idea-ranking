@@ -1,6 +1,11 @@
 import './card.css';
 import { Link } from "react-router-dom";
-function Card({isLoading, title, ranking, description, id, categories}) {
+function Card({isLoading, title, ranking, description, id, categories, vote, isTeamOne, hideVote=false}) {
+   const castVote =() =>
+   {
+    vote(isTeamOne);
+    // TODO: Animation
+   }
     if(!isLoading)
     {
         return (
@@ -22,7 +27,7 @@ function Card({isLoading, title, ranking, description, id, categories}) {
                 </div>
             </div>
             <div className='card__actions'>
-                <button>Vote</button>
+               {hideVote ?<></> :  <button onClick={castVote}>Vote</button>}
             <Link to={'/idea/' + id}>More</Link>
             </div>
             </div>

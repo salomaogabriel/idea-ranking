@@ -28,7 +28,7 @@ function App() {
           <Route path="/idea/:id" element={<Idea />}></Route> 
           <Route path="*" element={<Vote />}></Route> 
         </Routes> 
-        <Footer />
+        {/* <Footer /> */}
      </div>
   );
 }
