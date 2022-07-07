@@ -121,4 +121,6 @@ public class IdeasRepository : IIdeasRepository
         return categories;
     }
     public int GetIdeasMaxPages() => (int)Math.Ceiling(_context.Ideas.Count() / 10.0);
+    public async Task<List<Category>> GetCategories() => await _context.Categories.ToListAsync();
+
 }

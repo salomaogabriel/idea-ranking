@@ -14,4 +14,5 @@ public interface IIdeasRepository
     Task<Idea> GetRandomIdea();
     Task<Idea> GetRandomIdea(int except);
     int GetIdeasMaxPages();
+    Task<List<Category>> GetCategories();
 }

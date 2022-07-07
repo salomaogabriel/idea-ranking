@@ -55,5 +55,14 @@ public class IdeasController : ControllerBase
         var idea = await _ideasRepository.CreateIdea(request);
         return CreatedAtAction(nameof(GetIdea), new { id = idea.Id }, idea);
     }
-    
+    // No time to create controller:
+    [HttpGet("categories")]
+    public async Task<IActionResult> GetCategories()
+    {
+
+        var categories = await _ideasRepository.GetCategories();
+        if(categories == null) return NotFound($"There are no categories!");
+
+        return Ok(categories);
+    }
 }
