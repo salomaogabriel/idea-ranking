@@ -17,6 +17,8 @@ public class IdeasRepository : IIdeasRepository
     public async Task<Idea> CreateIdea(IdeaRequest request)
     {
         var idea = new Idea(request);
+        idea.Categories!.AddRange(await CreateCategories(request.NewCategories));
+        idea.Categories!.AddRange(await GetCategories(request.CategoryIds));
         _context.Ideas?.Add(idea);
         await _context.SaveChangesAsync();
         return idea;
@@ -54,5 +56,60 @@ public class IdeasRepository : IIdeasRepository
         await _context.SaveChangesAsync();
         return updatedIdea?.Entity;
      
+    }
+
+    public async Task<Idea?> UpdateMatchesNo(int id)
+    {
+        var idea = await GetIdea(id);
+        if (idea == null)
+            return null;
+
+        idea.NumberOfMatches += 1;
+        var updatedIdea = _context.Ideas?.Update(idea);
+        await _context.SaveChangesAsync();
+        return updatedIdea?.Entity;
+        
+    }
+
+    public async Task<Idea> GetRandomIdea()
+    {
+        return (await _context.Ideas.OrderBy(r => Guid.NewGuid()).FirstOrDefaultAsync())!;
+    }
+
+    public async Task<Idea> GetRandomIdea(int except)
+    {
+        return await _context.Ideas!
+            .Where(i => i.Id != except)
+            .OrderBy(r => Guid.NewGuid()).FirstOrDefaultAsync();
+
+    }
+
+    private async Task<List<Category>> CreateCategories(List<string> newCategories)
+    {
+        var categories = new List<Category>();
+        foreach (var name in newCategories)
+        {
+            categories.Add(await CreateCategory(name));
+        }
+
+        await _context.SaveChangesAsync();
+        return categories;
+    }
+
+    private async Task<Category> CreateCategory(string name)
+    {
+        var category = new Category()
+        {
+            Name = name
+        };
+        await _context.Categories!.AddAsync(category);
+        return category;
+    } 
+    private async Task<List<Category>> GetCategories(List<int> categoryIds)
+    {
+        var categories = await _context.Categories!
+            .IgnoreAutoIncludes().Where(c => categoryIds
+                .Any(i => i == c.Id)).ToListAsync();
+        return categories;
     }
 }

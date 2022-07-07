@@ -4,6 +4,7 @@ using IdeaRanking.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IdeaRanking.Migrations
 {
     [DbContext(typeof(IdeaRankingContext))]
-    partial class IdeaRankingContextModelSnapshot : ModelSnapshot
+    [Migration("20220707103801_UpdateMatchValues")]
+    partial class UpdateMatchValues
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,9 +65,6 @@ namespace IdeaRanking.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("NumberOfMatches")
-                        .HasColumnType("int");
 
                     b.Property<int>("Ranking")
                         .HasColumnType("int");

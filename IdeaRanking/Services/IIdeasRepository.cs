@@ -10,4 +10,7 @@ public interface IIdeasRepository
     Task<List<Idea>>? GetIdeas(int pageNo);
     Task<Idea?> GetIdea(int id);
     Task<Idea?> UpdateIdeaRank(int rank, int id);
+    Task<Idea?> UpdateMatchesNo(int id);
+    Task<Idea> GetRandomIdea();
+    Task<Idea> GetRandomIdea(int except);
 }

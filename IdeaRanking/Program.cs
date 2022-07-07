@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using IdeaRanking.Data;
 using IdeaRanking.Services;
@@ -10,11 +11,16 @@ builder.Services.AddDbContext<IdeaRankingContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("IdeaRankingContext")));
 
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IIdeasRepository, IdeasRepository>();
+builder.Services.AddScoped<IMatchRepository, MatchRepository>();
+builder.Services.AddScoped<IEloCalculator, EloCalculator>();
 var app = builder.Build();
 // Seeding Data
 using (var scope = app.Services.CreateScope())

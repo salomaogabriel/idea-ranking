@@ -6,6 +6,7 @@ public class IdeaRequest
     public int Ranking { get; set; }
     public string? Title { get; set; }
     public string? Description { get; set; }
-    // public List<Category> Categories { get; set; } 
+    public List<int> CategoryIds { get; set; }
+    public List<string> NewCategories { get; set; }
 
 }
