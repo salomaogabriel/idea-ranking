@@ -1,5 +1,7 @@
 {
   "dependencies": {
-    "react-router-dom": "^6.3.0"
+    "multiselect-react-dropdown": "^2.0.25",
+    "react-router-dom": "^6.3.0",
+    "select-pure": "^2.1.4"
   }
 }
