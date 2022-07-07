@@ -1,0 +1,14 @@
+.list-link
+{
+    text-decoration: none;
+    cursor: pointer;
+    color: #FBA94C;
+    padding: 8px;
+    border-radius: 8px;
+    transition: 500ms;
+    border: 1px solid transparent;
+}
+.list-link:hover {
+    background-color: #2E1B06;
+    border-color: #FBA94C;
+}

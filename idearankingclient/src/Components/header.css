@@ -1,0 +1,19 @@
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-image: linear-gradient(90deg, #505059 0%, transparent 100%);
+    background-color: #323238;
+    padding: 8px 20px;
+  }
+  .main-header__btn {
+    background-color: #00875F;
+    color: #E1E1E6;
+    text-decoration: none;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .main-header__btn:hover {
+    background-color: #00B37E;  
+    }

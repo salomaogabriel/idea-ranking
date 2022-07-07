@@ -1,0 +1,125 @@
+.card {
+    background-color: #202024;
+    border-radius: 8px;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.card__title {
+    display: flex;
+    align-items: center;
+    padding: 4px 8px;
+    background-image: linear-gradient(90deg, #29292e 0%, transparent 100%);
+    background-color: #202024;
+    border-radius: 8px 8px 0 0;
+}
+.card__title span {
+    margin-left: 20px;
+    font-size: 24px;
+    font-weight: 100;
+    margin-right: 20px;
+}
+.card__title h2 {
+    font-weight: 300;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.card__content {
+    padding: 10px;
+    text-align: left;
+}
+.card__content p{
+    font-weight: 300;
+    padding-left: 20px;
+}
+.card__content span {
+    font-weight: 100;
+    font-size: 12px;
+    background-color: #505059;
+    border-radius: 12px;
+    margin: 20px;
+    padding: 8px;
+    transition: 200ms;
+    cursor:default;
+}
+.card__content span:hover {
+    background-color: #7C7C8A;
+}
+.card__actions {
+    display: flex;
+    padding: 20px 20px;
+    justify-content: space-between;
+}
+.card__actions button, .card__actions a {
+    font-size: 1rem;
+    border: 0;
+    border-radius: 8px;
+    padding: 8px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    background-color: #00875F;
+    color: #E1E1E6;
+    text-decoration: none;
+    transition: 200ms;
+}
+.card__actions a {
+    background-color: transparent;
+    border-color:#00875F;
+}
+.card__actions a:hover {
+    background-color: #00291D;
+}
+.card__actions button:hover {
+    background-color: #015F43;
+}
+.loading-title, .loading-content {
+    margin-left: 0;
+    background-color: rgb(179, 179, 179);
+    background-size: 200px 100%;
+    height: 7px;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    border-radius: 150px;
+    background-repeat: no-repeat;
+    background-image: linear-gradient(90deg, rgba(0, 0, 0, 0), rgb(255, 255, 255), rgba(0, 0, 0, 0));
+    display: inline-block;
+    line-height: 1;
+    opacity: 0.1;
+    animation: 1.2s ease-in-out 0s infinite normal none running skeleton;
+}
+.loading-content {
+    height: 100px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+.loading__btns {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 40px;
+}
+.loading__btn {
+    height: 30px;
+    width: 20%;
+    background-color: rgb(179, 179, 179);
+    background-size: 200px 100%;
+    border-radius: 12px;
+    background-repeat: no-repeat;
+    background-image: linear-gradient(90deg, rgba(0, 0, 0, 0), rgb(255, 255, 255), rgba(0, 0, 0, 0));
+    display: inline-block;
+    line-height: 1;
+    opacity: 0.1;
+    animation: 1.2s ease-in-out 0s infinite normal none running skeleton;
+}
+@keyframes skeleton {
+    0% {
+        background-position: -200px 0px;
+    }
+    100% {
+        background-position: calc(200px + 100%) 0px;
+    }
+    
+}
