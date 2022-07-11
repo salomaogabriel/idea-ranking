@@ -4,34 +4,19 @@ namespace IdeaRanking.Data;
 
 public static class SeedData
 {
-    public static void Initialize(IServiceProvider serviceProvider)
+    // private static List<string> _categoryNames = new List<string>()
+    // {
+    //     "Software", "Website", "Finance", "Fintech", "Statistics", "Management", "School",
+    //     "Food", "Quiz", "Gambling", "Games", "Math", "Movies", "Bussiness"
+    // };
+        public static void Initialize(IServiceProvider serviceProvider)
     {
-        using (var context = new IdeaRankingContext(
-                   serviceProvider.GetRequiredService<
-                       DbContextOptions<IdeaRankingContext>>()))
-        {
-            var category1 = new Category()
-            {
-                Name = "Games"
-            };
-            var category2 = new Category()
-            {
-                Name = "Software"
-            };
-            var category3 = new Category()
-            {
-                Name = "All"
-            };
-            // Look for any movies.
-            if (context.Categories.Any()) { return; }
-            context.Categories.AddRange(
-                category1,
-                category2,
-                category3
-                );
-
-           
-            context.SaveChanges();
-        }
+        // using (var context = new IdeaRankingContext(
+        //            serviceProvider.GetRequiredService<
+        //                DbContextOptions<IdeaRankingContext>>()))
+        // {
+        //   var categories = _categoryNames.Select(s => new Category() {Name = s, Ideas = new List<Idea>()}).ToList();
+        //     context.Categories.AddRange(categories);
+        // }
     }
 }

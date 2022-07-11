@@ -7,8 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Adding Context
-builder.Services.AddDbContext<IdeaRankingContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("IdeaRankingContext")));
+builder.Services.AddDbContext<IdeaRankingContext>(options => options.UseInMemoryDatabase("IdeaRanking"));
 
 
 builder.Services.AddControllers().AddJsonOptions(options =>
@@ -23,19 +22,19 @@ builder.Services.AddScoped<IMatchRepository, MatchRepository>();
 builder.Services.AddScoped<IEloCalculator, EloCalculator>();
 var app = builder.Build();
 // Seeding Data
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
+// using (var scope = app.Services.CreateScope())
+// {
+//     var services = scope.ServiceProvider;
 
-    SeedData.Initialize(services);
-}
+//     SeedData.Initialize(services);
+// }
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000"));
+    app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("*"));
 }
 
 app.UseHttpsRedirection();

@@ -42,7 +42,7 @@ public class MatchController : ControllerBase
             PossibleOutcomeIdeaOne = _eloCalculator.GetProbability(idea2.Ranking, idea1.Ranking),
             PossibleOutcomeIdeaTwo = _eloCalculator.GetProbability(idea1.Ranking, idea2.Ranking)
         };
-        await _matchRepository.CreateMatch(match);
+        match = await _matchRepository.CreateMatch(match);
         return Ok(match);
     }
     // GET /vote/{id} -> Get an existing Match
@@ -100,7 +100,7 @@ public class MatchController : ControllerBase
     {
         var pageMax = _matchRepository.GetMatchesMaxPages();
         if (pageNo < 0) return BadRequest("Page needs to be bigger than 0!");
-        if (pageNo > pageMax) return BadRequest("Page needs to be smaller than 0!");
+        if (pageNo > pageMax) return BadRequest("Page needs to be smaller than 0!"); 
 
 
         var matches = await _matchRepository.GetAllMatches(pageNo);

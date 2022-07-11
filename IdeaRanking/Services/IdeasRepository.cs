@@ -78,7 +78,7 @@ public class IdeasRepository : IIdeasRepository
 
     public async Task<Idea> GetRandomIdea()
     {
-        return (await _context.Ideas
+        return (await _context.Ideas!
             .Include(i => i.Categories)
             .OrderBy(r => Guid.NewGuid()).FirstOrDefaultAsync())!;
     }
