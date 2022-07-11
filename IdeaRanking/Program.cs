@@ -34,7 +34,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("*"));
+    app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://salomaogabriel.github.io/idea-ranking/"));
 }
 
 app.UseHttpsRedirection();
