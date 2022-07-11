@@ -63,7 +63,7 @@ const customStyles = {
   const [existingCategories, setExistigCategories] = useState([]);
   let navigate = useNavigate();
   const getCategories = async () => {
-    const response = await fetch("https://localhost:7002/api/Ideas/categories");
+    const response = await fetch("https://idearanking.azurewebsites.net/api/ideas/categories");
     const deserializedJSON = await response.json();
     console.log(deserializedJSON["$values"])
     var tempCategories = deserializedJSON["$values"].map((category) => {
@@ -127,7 +127,7 @@ const customStyles = {
       body: body,
       redirect: 'follow'
     };
-    const response = await fetch("https://localhost:7002/api/Ideas", requestOptions)
+    const response = await fetch("https://idearanking.azurewebsites.net/api/ideas", requestOptions)
     const deserializedJSON = await response.json();
     navigate("/Idea/"+deserializedJSON.id, { replace: true });
     // setData(deserializedJSON);

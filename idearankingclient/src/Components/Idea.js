@@ -14,7 +14,7 @@ function Idea() {
   const getData = async () => {
     setLoading(true);
 
-    const response = await fetch("https://localhost:7002/api/Ideas/" + id);
+    const response = await fetch("https://idearanking.azurewebsites.net/api/ideas" + id);
     const deserializedJSON = await response.json();
     setData(deserializedJSON);
     let tempLabels = [];

@@ -10,7 +10,7 @@ function List() {
 
   const getData = async () => {
     setLoading(true)
-    const response = await fetch("https://localhost:7002/api/Ideas/page/" + page);
+    const response = await fetch("https://idearanking.azurewebsites.net/api/ideas/page/" + page);
     const deserializedJSON = await response.json();
     setData(deserializedJSON.ideas["$values"]);
     setMaxPage(deserializedJSON.maxPage)
@@ -39,10 +39,17 @@ function List() {
   {
     return (
       <div className="list-all">
-          {data.map((item) =>
+          {data.map((item, key) =>
           {
+
+            if(item["$ref"] !== undefined)
+            {
+              return(<></>);
+            }
+            console.log(item)
+
             return (
-              <Card isLoading={false} 
+              <Card key={key} isLoading={false} 
           title={item.title}
           ranking={item.ranking}
           id={item.id}

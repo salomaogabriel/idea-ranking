@@ -5,14 +5,21 @@ import { useEffect, useState } from 'react';
 function Vote() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const checkVoters = (jsonData) => {
+    if(jsonData.ideaOne["$ref"] !== undefined || jsonData.ideaTwo["$ref"] !== undefined)  
+    {
+      console.log(jsonData)
+      getMatch();
+    }
+  };
   const getMatch = async () => {
     setLoading(true);
 
-    const response = await fetch("https://localhost:7002/api/Match/vote");
+    const response = await fetch("https://idearanking.azurewebsites.net/api/match/vote");
     const deserializedJSON = await response.json();
     setData(deserializedJSON);
-    console.log(deserializedJSON)
     setLoading(false);
+    checkVoters(deserializedJSON);
   }
   const vote = async (isTeamOneWinner) => {
   document.body.classList.add("body-blink");
@@ -35,9 +42,12 @@ function Vote() {
       body: body,
       redirect: 'follow'
     };
-    const response = await fetch("https://localhost:7002/api/Match", requestOptions)
+    const response = await fetch("https://idearanking.azurewebsites.net/api/match", requestOptions)
     const deserializedJSON = await response.json();
+
     setData(deserializedJSON);
+    checkVoters(deserializedJSON);
+
 
   }
   useEffect(() => {
@@ -65,7 +75,7 @@ function Vote() {
           ranking={data.ideaTwo.ranking}
           description={data.ideaTwo.description}
           id={data.ideaTwo.id}
-          categories={data.ideaOne.categories}
+          categories={data.ideaTwo.categories}
           vote={vote}
           isTeamOne= {false}
 
