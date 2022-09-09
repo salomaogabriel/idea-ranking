@@ -14,8 +14,10 @@ public class IdeaRankingContext : DbContext
     public IdeaRankingContext(DbContextOptions<IdeaRankingContext> options)
         : base(options)
     {
+        this.ChangeTracker.LazyLoadingEnabled = false;
+
     }
-    public DbSet<Idea?>? Ideas { get; set; }
+    public DbSet<Idea>? Ideas { get; set; }
     public DbSet<Category>? Categories { get; set; }
     public DbSet<IdeaHistory>? History { get; set; }
     public DbSet<Match>? Matches { get; set; }

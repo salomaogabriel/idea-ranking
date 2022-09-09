@@ -28,8 +28,7 @@ public class Idea
     public string? Title { get; set; }
     public string? Description { get; set; }
     
-    [JsonIgnore]
-    public virtual List<Category>? Categories { get; set;}
-    public virtual List<IdeaHistory>? History { get; set; }
+    public List<Category>? Categories { get; set;}
+    public List<IdeaHistory>? History { get; set; }
 
 }

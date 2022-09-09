@@ -7,13 +7,20 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Adding Context
-builder.Services.AddDbContext<IdeaRankingContext>(options => options.UseInMemoryDatabase("IdeaRanking"));
+var connString = builder.Configuration.GetConnectionString("IdeaRankingContext");
+connString = connString.Replace("<username>", builder.Configuration["DB_USERNAME"]);
+connString = connString.Replace("<password>", builder.Configuration["DB_PASSWORD"]);
+
+builder.Services.AddDbContext<IdeaRankingContext>(options =>
+    options.UseSqlServer(connString));
 
 
-builder.Services.AddControllers().AddJsonOptions(options =>
-{
-    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-});
+
+builder.Services.AddControllers();
+// .AddJsonOptions(options =>
+// {
+//     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+// });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -35,7 +42,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-    app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://salomaogabriel.github.io"));
+    app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
 app.UseHttpsRedirection();
 
